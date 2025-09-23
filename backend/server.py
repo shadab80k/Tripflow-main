@@ -139,6 +139,11 @@ async def root():
 async def health_check():
     return {"status": "healthy", "service": "tripflow-backend"}
 
+@api_router.options("/{full_path:path}")
+async def options_handler(full_path: str):
+    """Handle CORS preflight requests"""
+    return {"message": "OK"}
+
 # Trip endpoints
 @api_router.post("/trips", response_model=Trip)
 async def create_trip(trip_data: TripCreate):
@@ -262,7 +267,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
     allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
