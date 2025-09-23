@@ -153,7 +153,7 @@
 
 **Backend** (`backend/.env`):
 ```env
-MONGO_URL=mongodb+srv://username:password@cluster.mongodb.net/tripflow_dev
+MONGO_URL=your_mongodb_connection_string_here
 DB_NAME=tripflow_dev
 CORS_ORIGINS=http://localhost:3000
 PYTHON_VERSION=3.11.11
