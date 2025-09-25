@@ -145,7 +145,7 @@ class TripWithDays(BaseModel):
 # API Routes
 
 # Root endpoint for health checks (Render deployment)
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 async def root():
     return {
         "message": "Tripflow API is running!", 
