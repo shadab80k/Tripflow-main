@@ -148,7 +148,7 @@ class TripWithDays(BaseModel):
 @app.api_route("/", methods=["GET", "HEAD"])
 async def root():
     return {
-        "message": "Tripflow API is running!", 
+        "message": "Tripflow API is running!",
         "status": "healthy",
         "service": "tripflow-backend",
         "version": "1.0.0"
