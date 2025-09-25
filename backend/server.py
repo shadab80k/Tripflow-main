@@ -20,7 +20,20 @@ db_name = os.environ.get('DB_NAME', 'tripflow_dev')
 db = client[db_name]
 
 # Create the main app without a prefix
-app = FastAPI()
+app = FastAPI(
+    title="Tripflow API",
+    description="AI-Powered Trip Planning Platform API",
+    version="1.0.0"
+)
+
+# Add CORS middleware first - before any routes
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins for now
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
@@ -131,8 +144,18 @@ class TripWithDays(BaseModel):
 
 # API Routes
 
-@api_router.get("/")
+# Root endpoint for health checks (Render deployment)
+@app.get("/")
 async def root():
+    return {
+        "message": "Tripflow API is running!", 
+        "status": "healthy",
+        "service": "tripflow-backend",
+        "version": "1.0.0"
+    }
+
+@api_router.get("/")
+async def api_root():
     return {"message": "Tripflow API is running!", "status": "healthy"}
 
 @api_router.get("/health")
@@ -262,14 +285,6 @@ async def reorder_activities(updates: List[dict]):
 
 # Include the router in the main app
 app.include_router(api_router)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["*"],
-)
 
 # Configure logging
 logging.basicConfig(
