@@ -187,13 +187,13 @@ async def get_trip_with_details(trip_id: str):
     trip = await db.trips.find_one({"id": trip_id})
     if not trip:
         raise HTTPException(status_code=404, detail="Trip not found")
-    
+
     # Get days for this trip
     days = await db.days.find({"trip_id": trip_id}).sort("index", 1).to_list(1000)
-    
+
     # Get activities for this trip
     activities = await db.activities.find({"trip_id": trip_id}).sort("order_index", 1).to_list(1000)
-    
+
     return TripWithDays(
         trip=Trip(**parse_from_mongo(trip)),
         days=[Day(**parse_from_mongo(day)) for day in days],
@@ -205,7 +205,7 @@ async def delete_trip(trip_id: str):
     # Delete all activities and days for this trip first
     await db.activities.delete_many({"trip_id": trip_id})
     await db.days.delete_many({"trip_id": trip_id})
-    
+
     # Delete the trip
     result = await db.trips.delete_one({"id": trip_id})
     if result.deleted_count == 0:
@@ -228,12 +228,12 @@ async def create_activity(trip_id: str, day_id: str, activity_data: ActivityCrea
     # Get current max order_index for this day
     existing_activities = await db.activities.find({"day_id": day_id}).to_list(1000)
     max_order = max([act.get("order_index", 0) for act in existing_activities], default=-1)
-    
+
     activity_dict = activity_data.dict()
     activity_dict["trip_id"] = trip_id
     activity_dict["day_id"] = day_id
     activity_dict["order_index"] = max_order + 1
-    
+
     activity_obj = Activity(**activity_dict)
     activity_mongo = prepare_for_mongo(activity_obj.dict())
     await db.activities.insert_one(activity_mongo)
@@ -243,16 +243,16 @@ async def create_activity(trip_id: str, day_id: str, activity_data: ActivityCrea
 async def update_activity(activity_id: str, activity_data: ActivityUpdate):
     update_dict = {k: v for k, v in activity_data.dict().items() if v is not None}
     update_dict["updated_at"] = datetime.now(timezone.utc)
-    
+
     update_mongo = prepare_for_mongo(update_dict)
     result = await db.activities.update_one(
         {"id": activity_id},
         {"$set": update_mongo}
     )
-    
+
     if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Activity not found")
-    
+
     updated_activity = await db.activities.find_one({"id": activity_id})
     return Activity(**parse_from_mongo(updated_activity))
 
@@ -270,17 +270,17 @@ async def reorder_activities(updates: List[dict]):
         activity_id = update.get("id")
         new_order = update.get("order_index")
         new_day_id = update.get("day_id")
-        
+
         update_data = {"order_index": new_order}
         if new_day_id:
             update_data["day_id"] = new_day_id
         update_data["updated_at"] = datetime.now(timezone.utc)
-        
+
         await db.activities.update_one(
             {"id": activity_id},
             {"$set": update_data}
         )
-    
+
     return {"message": "Activities reordered successfully"}
 
 # Include the router in the main app
