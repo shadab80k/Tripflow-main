@@ -8,26 +8,37 @@ const TimePicker = ({ value = '09:00', onChange, className, ...props }) => {
   const [selectedMinute, setSelectedMinute] = useState(0);
   const [selectedAmPm, setSelectedAmPm] = useState('AM');
 
-  // Parse the initial value
+  // Parse the initial value - handle both 24-hour and 12-hour formats
   useEffect(() => {
     if (value) {
-      const [hours, minutes] = value.split(':');
-      const hour24 = parseInt(hours);
-      const minute = parseInt(minutes);
-      
-      setSelectedMinute(minute);
-      if (hour24 === 0) {
-        setSelectedHour(12);
-        setSelectedAmPm('AM');
-      } else if (hour24 < 12) {
-        setSelectedHour(hour24);
-        setSelectedAmPm('AM');
-      } else if (hour24 === 12) {
-        setSelectedHour(12);
-        setSelectedAmPm('PM');
+      // Check if value contains AM/PM (12-hour format) or is just HH:MM (24-hour)
+      if (value.includes('AM') || value.includes('PM')) {
+        // 12-hour format like "9:00 AM"
+        const [timepart, ampm] = value.split(' ');
+        const [hours, minutes] = timepart.split(':');
+        setSelectedHour(parseInt(hours));
+        setSelectedMinute(parseInt(minutes));
+        setSelectedAmPm(ampm);
       } else {
-        setSelectedHour(hour24 - 12);
-        setSelectedAmPm('PM');
+        // 24-hour format like "09:00"
+        const [hours, minutes] = value.split(':');
+        const hour24 = parseInt(hours);
+        const minute = parseInt(minutes);
+        
+        setSelectedMinute(minute);
+        if (hour24 === 0) {
+          setSelectedHour(12);
+          setSelectedAmPm('AM');
+        } else if (hour24 < 12) {
+          setSelectedHour(hour24);
+          setSelectedAmPm('AM');
+        } else if (hour24 === 12) {
+          setSelectedHour(12);
+          setSelectedAmPm('PM');
+        } else {
+          setSelectedHour(hour24 - 12);
+          setSelectedAmPm('PM');
+        }
       }
     }
   }, [value]);
@@ -48,7 +59,7 @@ const TimePicker = ({ value = '09:00', onChange, className, ...props }) => {
   const handleTimeChange = (newHour, newMinute, newAmPm) => {
     const hour24 = convertTo24Hour(newHour, newAmPm);
     const timeString = `${hour24.toString().padStart(2, '0')}:${newMinute.toString().padStart(2, '0')}`;
-    onChange?.(timeString);
+    onChange?.(timeString); // Send 24-hour format to backend
     setIsOpen(false);
   };
 
