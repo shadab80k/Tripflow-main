@@ -345,9 +345,9 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg md:max-w-2xl max-h-[85vh] overflow-y-auto mx-2 md:mx-4 w-[calc(100vw-1rem)] sm:w-[calc(100vw-2rem)] md:w-full">
+      <DialogContent className="max-w-sm md:max-w-lg lg:max-w-2xl max-h-[90vh] overflow-y-auto mx-2 md:mx-4 w-[calc(100vw-1rem)] sm:w-[calc(100vw-2rem)] md:w-full">
         <DialogHeader className="pb-3 md:pb-4">
-          <DialogTitle className="text-lg md:text-2xl font-bold text-center md:text-left">
+          <DialogTitle className="text-lg md:text-xl lg:text-2xl font-bold text-center md:text-left">
             {activity ? 'Edit Activity' : 'Add New Activity'}
           </DialogTitle>
         </DialogHeader>
@@ -854,56 +854,70 @@ function TripPlanner() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       {/* Enhanced Header */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-40">
-        <div className="px-4 md:px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 md:gap-4 min-w-0 flex-1">
+        <div className="px-3 md:px-6 py-3 md:py-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+            {/* Left side - Title and menu */}
+            <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
               <Button
                 variant="ghost"
                 size="sm"
-                className="lg:hidden flex-shrink-0"
+                className="lg:hidden flex-shrink-0 p-1"
                 onClick={() => setSidebarOpen(true)}
               >
-                <Menu className="h-5 w-5" />
+                <Menu className="h-4 w-4" />
               </Button>
               <div className="min-w-0 flex-1">
-                <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent truncate">
+                <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent truncate leading-tight">
                   {tripData.title}
                 </h1>
-                <p className="text-sm md:text-base text-gray-600 font-medium truncate">
+                <p className="text-xs sm:text-sm md:text-base text-gray-600 font-medium truncate mt-0.5">
                   {format(parseISO(tripData.date_start), 'MMM d')} - {format(parseISO(tripData.date_end), 'MMM d, yyyy')} • {tripDuration} days
                 </p>
               </div>
             </div>
             
-            <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
-              {/* Mobile Stats - Show on small screens */}
-              <div className="flex lg:hidden items-center gap-2 text-xs">
-                <div className="text-center px-2 py-1 bg-blue-50 rounded">
-                  <div className="font-bold text-sm text-blue-600">{totalActivities}</div>
-                  <div className="text-blue-700 font-medium text-[10px]">Activities</div>
+            {/* Right side - Stats and actions */}
+            <div className="flex items-center justify-between sm:justify-end gap-2 md:gap-3">
+              {/* Mobile Stats - Compact version */}
+              <div className="flex sm:hidden items-center gap-1.5">
+                <div className="text-center px-1.5 py-1 bg-blue-50 rounded text-[10px]">
+                  <div className="font-bold text-blue-600 leading-tight">{totalActivities}</div>
+                  <div className="text-blue-700 font-medium">Activities</div>
                 </div>
-                <div className="text-center px-2 py-1 bg-green-50 rounded">
+                <div className="text-center px-1.5 py-1 bg-green-50 rounded text-[10px]">
+                  <div className="font-bold text-green-600 leading-tight">{getCurrencySymbol(tripData?.currency)}{totalCost.toFixed(0)}</div>
+                  <div className="text-green-700 font-medium">Cost</div>
+                </div>
+              </div>
+              
+              {/* Tablet Stats - Show on medium screens */}
+              <div className="hidden sm:flex lg:hidden items-center gap-2">
+                <div className="text-center px-2 py-1.5 bg-blue-50 rounded-lg">
+                  <div className="font-bold text-sm text-blue-600">{totalActivities}</div>
+                  <div className="text-blue-700 font-medium text-[10px] uppercase tracking-wide">Activities</div>
+                </div>
+                <div className="text-center px-2 py-1.5 bg-green-50 rounded-lg">
                   <div className="font-bold text-sm text-green-600">{getCurrencySymbol(tripData?.currency)}{totalCost.toFixed(0)}</div>
-                  <div className="text-green-700 font-medium text-[10px]">Cost</div>
+                  <div className="text-green-700 font-medium text-[10px] uppercase tracking-wide">Cost</div>
                 </div>
               </div>
               
               {/* Desktop Stats - Show on large screens */}
-              <div className="hidden lg:flex items-center gap-4 xl:gap-6 text-sm">
+              <div className="hidden lg:flex items-center gap-3 xl:gap-4">
                 <div className="text-center px-3 xl:px-4 py-2 bg-blue-50 rounded-lg">
-                  <div className="font-bold text-xl xl:text-2xl text-blue-600">{totalActivities}</div>
-                  <div className="text-blue-700 font-medium text-xs xl:text-sm">Activities</div>
+                  <div className="font-bold text-lg xl:text-xl text-blue-600">{totalActivities}</div>
+                  <div className="text-blue-700 font-medium text-xs">Activities</div>
                 </div>
                 <div className="text-center px-3 xl:px-4 py-2 bg-green-50 rounded-lg">
-                  <div className="font-bold text-xl xl:text-2xl text-green-600">{getCurrencySymbol(tripData?.currency)}{totalCost.toFixed(2)}</div>
-                  <div className="text-green-700 font-medium text-xs xl:text-sm">Total Cost</div>
+                  <div className="font-bold text-lg xl:text-xl text-green-600">{getCurrencySymbol(tripData?.currency)}{totalCost.toFixed(2)}</div>
+                  <div className="text-green-700 font-medium text-xs">Total Cost</div>
                 </div>
               </div>
               
               <Button
                 variant="outline"
                 size="sm"
-                className="flex-shrink-0"
+                className="flex-shrink-0 px-2 md:px-3"
                 onClick={async () => {
                   try {
                     await navigator.clipboard.writeText(window.location.href);
@@ -926,7 +940,7 @@ function TripPlanner() {
                   }
                 }}
               >
-                <Share2 className="h-4 w-4 md:mr-2" />
+                <Share2 className="h-3 w-3 sm:h-4 sm:w-4 md:mr-2" />
                 <span className="hidden md:inline">Share</span>
               </Button>
             </div>
