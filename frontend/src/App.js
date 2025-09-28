@@ -152,7 +152,7 @@ function SortableActivityCard({ activity, onEdit, onDelete, showConflict = false
               </div>
             </div>
             
-            <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="flex gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
               <Button
                 variant="ghost"
                 size="sm"
@@ -237,7 +237,7 @@ function DayColumn({ day, activities, onAddActivity, onEditActivity, onDeleteAct
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 min-w-80 md:min-w-96 w-full md:w-auto h-fit">
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 w-full h-fit">
       {/* Day Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 md:mb-6 gap-3 sm:gap-0">
         <div className="flex-1">
@@ -345,66 +345,66 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">
+      <DialogContent className="max-w-lg md:max-w-2xl max-h-[85vh] overflow-y-auto mx-2 md:mx-4 w-[calc(100vw-1rem)] sm:w-[calc(100vw-2rem)] md:w-full">
+        <DialogHeader className="pb-3 md:pb-4">
+          <DialogTitle className="text-lg md:text-2xl font-bold text-center md:text-left">
             {activity ? 'Edit Activity' : 'Add New Activity'}
           </DialogTitle>
         </DialogHeader>
         
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+          <div className="space-y-3 md:space-y-4">
             <div>
-              <Label htmlFor="title" className="text-base font-semibold">Activity Title *</Label>
+              <Label htmlFor="title" className="text-sm md:text-base font-semibold">Activity Title *</Label>
               <Input
                 id="title"
                 value={formData.title}
                 onChange={(e) => setFormData({...formData, title: e.target.value})}
                 placeholder="Enter activity title"
-                className="mt-2 h-12 text-base"
+                className="mt-1.5 md:mt-2 h-10 md:h-12 text-sm md:text-base"
                 required
               />
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
               <div>
-                <Label htmlFor="start_time" className="text-base font-semibold">Start Time</Label>
+                <Label htmlFor="start_time" className="text-sm md:text-base font-semibold">Start Time</Label>
                 <Input
                   id="start_time"
                   type="time"
                   value={formData.start_time}
                   onChange={(e) => setFormData({...formData, start_time: e.target.value})}
-                  className="mt-2 h-12"
+                  className="mt-1.5 md:mt-2 h-10 md:h-12 text-sm"
                 />
               </div>
               <div>
-                <Label htmlFor="end_time" className="text-base font-semibold">End Time</Label>
+                <Label htmlFor="end_time" className="text-sm md:text-base font-semibold">End Time</Label>
                 <Input
                   id="end_time"
                   type="time"
                   value={formData.end_time}
                   onChange={(e) => setFormData({...formData, end_time: e.target.value})}
-                  className="mt-2 h-12"
+                  className="mt-1.5 md:mt-2 h-10 md:h-12 text-sm"
                 />
               </div>
             </div>
 
             <div>
-              <Label htmlFor="location" className="text-base font-semibold">Location</Label>
+              <Label htmlFor="location" className="text-sm md:text-base font-semibold">Location</Label>
               <Input
                 id="location"
                 value={formData.location_text}
                 onChange={(e) => setFormData({...formData, location_text: e.target.value})}
                 placeholder="Enter location or address"
-                className="mt-2 h-12 text-base"
+                className="mt-1.5 md:mt-2 h-10 md:h-12 text-sm md:text-base"
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
               <div>
-                <Label htmlFor="category" className="text-base font-semibold">Category</Label>
+                <Label htmlFor="category" className="text-sm md:text-base font-semibold">Category</Label>
                 <Select value={formData.category} onValueChange={(value) => setFormData({...formData, category: value})}>
-                  <SelectTrigger className="mt-2 h-12">
+                  <SelectTrigger className="mt-1.5 md:mt-2 h-10 md:h-12">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -418,7 +418,7 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
                 </Select>
               </div>
               <div>
-                <Label htmlFor="cost" className="text-base font-semibold">Cost</Label>
+                <Label htmlFor="cost" className="text-sm md:text-base font-semibold">Cost</Label>
                 <Input
                   id="cost"
                   type="number"
@@ -427,29 +427,29 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
                   value={formData.cost}
                   onChange={(e) => setFormData({...formData, cost: e.target.value === '' ? '' : parseFloat(e.target.value) || ''})}
                   placeholder="Enter cost amount"
-                  className="mt-2 h-12"
+                  className="mt-1.5 md:mt-2 h-10 md:h-12 text-sm"
                 />
               </div>
             </div>
 
             <div>
-              <Label htmlFor="notes" className="text-base font-semibold">Notes</Label>
+              <Label htmlFor="notes" className="text-sm md:text-base font-semibold">Notes</Label>
               <Textarea
                 id="notes"
                 value={formData.notes}
                 onChange={(e) => setFormData({...formData, notes: e.target.value})}
                 placeholder="Add any additional notes or details..."
-                className="mt-2 min-h-24 text-base"
-                rows={4}
+                className="mt-1.5 md:mt-2 min-h-20 md:min-h-24 text-sm md:text-base"
+                rows={3}
               />
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:justify-end gap-3 pt-6 border-t">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="px-6 order-2 sm:order-1">
+          <div className="flex flex-col sm:flex-row sm:justify-end gap-2 md:gap-3 pt-4 md:pt-6 border-t">
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="px-4 md:px-6 py-2 text-sm md:text-base order-2 sm:order-1">
               Cancel
             </Button>
-            <Button type="submit" className="px-6 order-1 sm:order-2">
+            <Button type="submit" className="px-4 md:px-6 py-2 text-sm md:text-base order-1 sm:order-2">
               {activity ? 'Update Activity' : 'Add Activity'}
             </Button>
           </div>
@@ -876,6 +876,19 @@ function TripPlanner() {
             </div>
             
             <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
+              {/* Mobile Stats - Show on small screens */}
+              <div className="flex lg:hidden items-center gap-2 text-xs">
+                <div className="text-center px-2 py-1 bg-blue-50 rounded">
+                  <div className="font-bold text-sm text-blue-600">{totalActivities}</div>
+                  <div className="text-blue-700 font-medium text-[10px]">Activities</div>
+                </div>
+                <div className="text-center px-2 py-1 bg-green-50 rounded">
+                  <div className="font-bold text-sm text-green-600">{getCurrencySymbol(tripData?.currency)}{totalCost.toFixed(0)}</div>
+                  <div className="text-green-700 font-medium text-[10px]">Cost</div>
+                </div>
+              </div>
+              
+              {/* Desktop Stats - Show on large screens */}
               <div className="hidden lg:flex items-center gap-4 xl:gap-6 text-sm">
                 <div className="text-center px-3 xl:px-4 py-2 bg-blue-50 rounded-lg">
                   <div className="font-bold text-xl xl:text-2xl text-blue-600">{totalActivities}</div>
@@ -997,22 +1010,22 @@ function TripPlanner() {
         {/* Main Content Area */}
         <div className="flex-1">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <div className="px-4 md:px-6 py-4 bg-white/50 border-b">
-              <TabsList className="grid w-full max-w-md grid-cols-3 tabs-list">
-                <TabsTrigger value="planner" className="flex items-center gap-1 md:gap-2 text-sm">
+            <div className="px-4 md:px-6 py-3 md:py-4 bg-white border-b border-gray-200">
+              <TabsList className="grid w-full max-w-sm md:max-w-md grid-cols-3 bg-gray-50 md:bg-gray-100 rounded-lg p-1">
+                <TabsTrigger value="planner" className="flex items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-2.5 px-2 md:px-3 rounded-md data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm font-medium transition-all">
                   <Calendar className="h-3 w-3 md:h-4 md:w-4" />
-                  <span className="hidden xs:inline">Planner</span>
-                  <span className="xs:hidden">Plan</span>
+                  <span className="hidden sm:inline">Planner</span>
+                  <span className="sm:hidden">Plan</span>
                 </TabsTrigger>
-                <TabsTrigger value="map" className="flex items-center gap-1 md:gap-2 text-sm">
+                <TabsTrigger value="map" className="flex items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-2.5 px-2 md:px-3 rounded-md data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm font-medium transition-all">
                   <Map className="h-3 w-3 md:h-4 md:w-4" />
-                  <span className="hidden xs:inline">Map</span>
-                  <span className="xs:hidden">Map</span>
+                  <span className="hidden sm:inline">Map</span>
+                  <span className="sm:hidden">Map</span>
                 </TabsTrigger>
-                <TabsTrigger value="stats" className="flex items-center gap-1 md:gap-2 text-sm">
+                <TabsTrigger value="stats" className="flex items-center gap-1 md:gap-2 text-xs md:text-sm py-2 md:py-2.5 px-2 md:px-3 rounded-md data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm font-medium transition-all">
                   <BarChart3 className="h-3 w-3 md:h-4 md:w-4" />
-                  <span className="hidden xs:inline">Stats</span>
-                  <span className="xs:hidden">Stats</span>
+                  <span className="hidden sm:inline">Stats</span>
+                  <span className="sm:hidden">Stats</span>
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -1025,7 +1038,7 @@ function TripPlanner() {
                 onDragOver={handleDragOver}
                 onDragEnd={handleDragEnd}
               >
-                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8 md:flex md:gap-8 md:overflow-x-auto pb-8">
+                <div className="flex flex-col md:grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8 md:overflow-x-auto pb-8">
                   {days.map((day) => (
                     <DayColumn
                       key={day.id}
@@ -1054,42 +1067,42 @@ function TripPlanner() {
 
             <TabsContent value="map" className="p-4 md:p-6">
               <div className="max-w-4xl mx-auto">
-                <div className="flex flex-col items-center justify-center py-16 md:py-24 text-center">
-                  <div className="p-6 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-full mb-8">
-                    <Construction className="h-16 w-16 md:h-20 md:w-20 text-blue-500" />
-                  </div>
-                  
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    Interactive Map
-                  </h2>
-                  
-                  <div className="inline-block px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full mb-6">
-                    Coming Soon
-                  </div>
-                  
-                  <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl leading-relaxed">
-                    We're working hard to bring you an amazing interactive map experience. 
-                    Soon you'll be able to visualize your trip routes, explore destinations, and get detailed location insights.
-                  </p>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 w-full max-w-3xl">
-                    <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                      <MapPin className="h-8 w-8 text-blue-500 mb-4 mx-auto" />
-                      <h3 className="font-semibold text-gray-900 mb-2">Route Planning</h3>
-                      <p className="text-sm text-gray-600">Optimize your daily travel routes</p>
+                  <div className="flex flex-col items-center justify-center py-8 md:py-16 lg:py-24 text-center px-4">
+                    <div className="p-4 md:p-6 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-full mb-6 md:mb-8">
+                      <Construction className="h-12 w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 text-blue-500" />
                     </div>
                     
-                    <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                      <Globe2 className="h-8 w-8 text-green-500 mb-4 mx-auto" />
-                      <h3 className="font-semibold text-gray-900 mb-2">Location Insights</h3>
-                      <p className="text-sm text-gray-600">Discover nearby attractions</p>
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
+                      Interactive Map
+                    </h2>
+                    
+                    <div className="inline-block px-4 md:px-6 py-1.5 md:py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full mb-4 md:mb-6 text-sm md:text-base">
+                      Coming Soon
                     </div>
                     
-                    <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                      <Car className="h-8 w-8 text-purple-500 mb-4 mx-auto" />
-                      <h3 className="font-semibold text-gray-900 mb-2">Travel Times</h3>
-                      <p className="text-sm text-gray-600">Estimate distances and durations</p>
-                    </div>
+                    <p className="text-base md:text-lg lg:text-xl text-gray-600 mb-6 md:mb-8 max-w-xs md:max-w-2xl leading-relaxed">
+                      We're working hard to bring you an amazing interactive map experience. 
+                      Soon you'll be able to visualize your trip routes, explore destinations, and get detailed location insights.
+                    </p>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12 w-full max-w-3xl">
+                      <div className="p-4 md:p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                        <MapPin className="h-6 w-6 md:h-8 md:w-8 text-blue-500 mb-3 md:mb-4 mx-auto" />
+                        <h3 className="font-semibold text-gray-900 mb-1 md:mb-2 text-sm md:text-base">Route Planning</h3>
+                        <p className="text-xs md:text-sm text-gray-600">Optimize your daily travel routes</p>
+                      </div>
+                      
+                      <div className="p-4 md:p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                        <Globe2 className="h-6 w-6 md:h-8 md:w-8 text-green-500 mb-3 md:mb-4 mx-auto" />
+                        <h3 className="font-semibold text-gray-900 mb-1 md:mb-2 text-sm md:text-base">Location Insights</h3>
+                        <p className="text-xs md:text-sm text-gray-600">Discover nearby attractions</p>
+                      </div>
+                      
+                      <div className="p-4 md:p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                        <Car className="h-6 w-6 md:h-8 md:w-8 text-purple-500 mb-3 md:mb-4 mx-auto" />
+                        <h3 className="font-semibold text-gray-900 mb-1 md:mb-2 text-sm md:text-base">Travel Times</h3>
+                        <p className="text-xs md:text-sm text-gray-600">Estimate distances and durations</p>
+                      </div>
                   </div>
                 </div>
               </div>
@@ -1259,34 +1272,34 @@ function Home() {
               </div>
             </div>
             
-            <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
               Plan Your Perfect{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Adventure
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 md:mb-12 max-w-2xl md:max-w-3xl mx-auto leading-relaxed px-4">
               Transform your travel dreams into reality with our intelligent drag-and-drop planner. 
               Create detailed itineraries, manage activities, and never miss a moment of your journey.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center px-4">
               <Button 
                 size="lg" 
-                className="text-lg px-12 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
+                className="text-base md:text-lg px-8 md:px-12 py-3 md:py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 w-full sm:w-auto"
                 onClick={() => setCreateDialogOpen(true)}
               >
-                <Sparkles className="mr-3 h-6 w-6" />
+                <Sparkles className="mr-2 md:mr-3 h-5 w-5 md:h-6 md:w-6" />
                 Start Planning
               </Button>
               
               <Button 
                 variant="outline" 
                 size="lg"
-                className="text-lg px-8 py-4 border-2 hover:bg-gray-50"
+                className="text-base md:text-lg px-6 md:px-8 py-3 md:py-4 border-2 hover:bg-gray-50 w-full sm:w-auto"
               >
-                <Play className="mr-2 h-5 w-5" />
+                <Play className="mr-2 h-4 w-4 md:h-5 md:w-5" />
                 Watch Demo
               </Button>
             </div>
@@ -1295,41 +1308,41 @@ function Home() {
       </div>
 
       {/* Features Section */}
-      <div className="max-w-7xl mx-auto px-6 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Everything You Need</h2>
-          <p className="text-xl text-gray-600">Powerful features to make trip planning effortless</p>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-20">
+        <div className="text-center mb-10 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">Everything You Need</h2>
+          <p className="text-lg md:text-xl text-gray-600 px-4">Powerful features to make trip planning effortless</p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <Card className="p-8 hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-blue-50 to-indigo-50">
-            <div className="p-3 bg-blue-500 rounded-xl w-fit mb-6">
-              <Calendar className="h-8 w-8 text-white" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <Card className="p-6 md:p-8 hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-blue-50 to-indigo-50">
+            <div className="p-2 md:p-3 bg-blue-500 rounded-xl w-fit mb-4 md:mb-6">
+              <Calendar className="h-6 w-6 md:h-8 md:w-8 text-white" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Drag & Drop Planning</h3>
-            <p className="text-gray-600 leading-relaxed">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Drag & Drop Planning</h3>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
               Intuitive Kanban-style interface. Drag activities between days, reorder your schedule, 
               and see changes in real-time.
             </p>
           </Card>
           
-          <Card className="p-8 hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-green-50 to-emerald-50">
-            <div className="p-3 bg-green-500 rounded-xl w-fit mb-6">
-              <Map className="h-8 w-8 text-white" />
+          <Card className="p-6 md:p-8 hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-green-50 to-emerald-50">
+            <div className="p-2 md:p-3 bg-green-500 rounded-xl w-fit mb-4 md:mb-6">
+              <Map className="h-6 w-6 md:h-8 md:w-8 text-white" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Interactive Maps</h3>
-            <p className="text-gray-600 leading-relaxed">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Interactive Maps</h3>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
               Visualize your journey on interactive maps. See routes, distances, 
               and optimize your daily travel plans.
             </p>
           </Card>
           
-          <Card className="p-8 hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-purple-50 to-pink-50">
-            <div className="p-3 bg-purple-500 rounded-xl w-fit mb-6">
-              <BarChart3 className="h-8 w-8 text-white" />
+          <Card className="p-6 md:p-8 hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-purple-50 to-pink-50">
+            <div className="p-2 md:p-3 bg-purple-500 rounded-xl w-fit mb-4 md:mb-6">
+              <BarChart3 className="h-6 w-6 md:h-8 md:w-8 text-white" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Smart Analytics</h3>
-            <p className="text-gray-600 leading-relaxed">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-4">Smart Analytics</h3>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
               Track expenses, analyze time distribution, and get insights 
               to optimize your travel budget and schedule.
             </p>
@@ -1338,18 +1351,18 @@ function Home() {
       </div>
 
       {/* Recent Trips */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="flex items-center justify-between mb-12">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 md:mb-12 gap-4">
           <div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-2">Your Trips</h2>
-            <p className="text-gray-600 text-lg">Manage and revisit your adventures</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-1 md:mb-2">Your Trips</h2>
+            <p className="text-gray-600 text-base md:text-lg">Manage and revisit your adventures</p>
           </div>
           <Button 
             variant="outline" 
-            className="border-2 hover:bg-blue-50 hover:border-blue-300"
+            className="border-2 hover:bg-blue-50 hover:border-blue-300 w-full sm:w-auto"
             onClick={() => setCreateDialogOpen(true)}
           >
-            <Plus className="mr-2 h-5 w-5" />
+            <Plus className="mr-2 h-4 w-4 md:h-5 md:w-5" />
             New Trip
           </Button>
         </div>
@@ -1397,7 +1410,7 @@ function Home() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="absolute top-3 right-3 h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-50 z-10"
+                  className="absolute top-3 right-3 h-8 w-8 p-0 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity hover:bg-red-50 z-10"
                   onClick={(e) => {
                     e.stopPropagation();
                     setTripToDelete(trip);
@@ -1451,55 +1464,55 @@ function Home() {
 
       {/* Enhanced Create Trip Dialog */}
       <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl mx-4 w-[calc(100vw-2rem)] sm:w-full">
           <DialogHeader>
-            <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <DialogTitle className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Create New Trip
             </DialogTitle>
           </DialogHeader>
           
-          <form onSubmit={createTrip} className="space-y-6 mt-6">
+          <form onSubmit={createTrip} className="space-y-4 md:space-y-6 mt-4 md:mt-6">
             <div>
-              <Label htmlFor="trip-title" className="text-lg font-semibold">Where are you going? *</Label>
+              <Label htmlFor="trip-title" className="text-base md:text-lg font-semibold">Where are you going? *</Label>
               <Input
                 id="trip-title"
                 value={newTrip.title}
                 onChange={(e) => setNewTrip({...newTrip, title: e.target.value})}
                 placeholder="My Amazing European Adventure"
-                className="mt-2 h-12 text-lg"
+                className="mt-2 h-10 md:h-12 text-base md:text-lg"
                 required
               />
             </div>
             
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
               <div>
-                <Label htmlFor="start-date" className="text-lg font-semibold">Start Date *</Label>
+                <Label htmlFor="start-date" className="text-base md:text-lg font-semibold">Start Date *</Label>
                 <Input
                   id="start-date"
                   type="date"
                   value={newTrip.date_start}
                   onChange={(e) => setNewTrip({...newTrip, date_start: e.target.value})}
-                  className="mt-2 h-12"
+                  className="mt-2 h-10 md:h-12"
                   required
                 />
               </div>
               <div>
-                <Label htmlFor="end-date" className="text-lg font-semibold">End Date *</Label>
+                <Label htmlFor="end-date" className="text-base md:text-lg font-semibold">End Date *</Label>
                 <Input
                   id="end-date"
                   type="date"
                   value={newTrip.date_end}
                   onChange={(e) => setNewTrip({...newTrip, date_end: e.target.value})}
-                  className="mt-2 h-12"
+                  className="mt-2 h-10 md:h-12"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <Label htmlFor="currency" className="text-lg font-semibold">Currency</Label>
+              <Label htmlFor="currency" className="text-base md:text-lg font-semibold">Currency</Label>
               <Select value={newTrip.currency} onValueChange={(value) => setNewTrip({...newTrip, currency: value})}>
-                <SelectTrigger className="mt-2 h-12">
+                <SelectTrigger className="mt-2 h-10 md:h-12">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -1514,18 +1527,18 @@ function Home() {
               </Select>
             </div>
 
-            <div className="flex justify-end gap-4 pt-6 border-t">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 md:gap-4 pt-4 md:pt-6 border-t">
               <Button 
                 type="button" 
                 variant="outline" 
                 onClick={() => setCreateDialogOpen(false)}
-                className="px-8"
+                className="px-6 md:px-8 order-2 sm:order-1"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit"
-                className="px-8 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                className="px-6 md:px-8 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 order-1 sm:order-2"
               >
                 Create Trip
               </Button>
@@ -1536,37 +1549,37 @@ function Home() {
 
       {/* Delete Trip Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-w-md mx-4 w-[calc(100vw-2rem)] sm:w-full">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold text-red-600">Delete Trip</DialogTitle>
+            <DialogTitle className="text-lg md:text-xl font-bold text-red-600">Delete Trip</DialogTitle>
           </DialogHeader>
           
           <div className="py-4">
-            <p className="text-gray-700 mb-4">
+            <p className="text-sm md:text-base text-gray-700 mb-4">
               Are you sure you want to delete <span className="font-semibold">"{tripToDelete?.title}"</span>?
             </p>
             <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-              <div className="flex items-center">
-                <AlertTriangle className="h-5 w-5 text-red-600 mr-2" />
-                <span className="text-red-800 text-sm font-medium">
+              <div className="flex items-start">
+                <AlertTriangle className="h-4 w-4 md:h-5 md:w-5 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
+                <span className="text-red-800 text-xs md:text-sm font-medium">
                   This action cannot be undone. All activities and data will be permanently deleted.
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row justify-end gap-3 pt-2">
             <Button 
               variant="outline" 
               onClick={() => setDeleteDialogOpen(false)}
-              className="px-6"
+              className="px-4 md:px-6 order-2 sm:order-1"
             >
               Cancel
             </Button>
             <Button 
               variant="destructive"
               onClick={deleteTrip}
-              className="px-6"
+              className="px-4 md:px-6 order-1 sm:order-2"
             >
               Delete Trip
             </Button>
