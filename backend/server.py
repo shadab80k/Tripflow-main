@@ -125,7 +125,7 @@ class Trip(BaseModel):
     title: str
     date_start: str  # Store as ISO date string
     date_end: str    # Store as ISO date string
-    currency: Optional[str] = "USD"
+    currency: Optional[str] = "INR"
     theme: Optional[str] = "blue"
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
@@ -134,7 +134,7 @@ class TripCreate(BaseModel):
     title: str
     date_start: str
     date_end: str
-    currency: Optional[str] = "USD"
+    currency: Optional[str] = "INR"
     theme: Optional[str] = "blue"
 
 class TripWithDays(BaseModel):

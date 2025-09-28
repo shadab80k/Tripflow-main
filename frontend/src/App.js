@@ -43,7 +43,7 @@ import { Toaster } from './components/ui/toaster';
 
 // Import icons
 import { 
-  Plus, Clock, MapPin, DollarSign, Calendar, Trash2, Edit3, 
+  Plus, Clock, MapPin, DollarSign, IndianRupee, Calendar, Trash2, Edit3, 
   Map, Download, Filter, Search, Share2, Copy, AlertTriangle,
   Plane, Car, Camera, Utensils, Bed, Star, ChevronDown,
   BarChart3, PieChart, TrendingUp, Users, Globe2,
@@ -305,7 +305,7 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
     location_text: '',
     category: 'general',
     notes: '',
-    cost: 0,
+    cost: '',
     priority: 'medium',
     color: '#3b82f6'
   });
@@ -319,7 +319,7 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
         location_text: activity.location_text || '',
         category: activity.category || 'general',
         notes: activity.notes || '',
-        cost: activity.cost || 0,
+        cost: activity.cost || '',
         priority: activity.priority || 'medium',
         color: activity.color || '#3b82f6'
       });
@@ -331,7 +331,7 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
         location_text: '',
         category: 'general',
         notes: '',
-        cost: 0,
+        cost: '',
         priority: 'medium',
         color: '#3b82f6'
       });
@@ -418,14 +418,15 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
                 </Select>
               </div>
               <div>
-                <Label htmlFor="cost" className="text-base font-semibold">Cost ($)</Label>
+                <Label htmlFor="cost" className="text-base font-semibold">Cost</Label>
                 <Input
                   id="cost"
                   type="number"
                   min="0"
                   step="0.01"
                   value={formData.cost}
-                  onChange={(e) => setFormData({...formData, cost: parseFloat(e.target.value) || 0})}
+                  onChange={(e) => setFormData({...formData, cost: e.target.value === '' ? '' : parseFloat(e.target.value) || ''})}
+                  placeholder="Enter cost amount"
                   className="mt-2 h-12"
                 />
               </div>
@@ -1089,7 +1090,7 @@ function TripPlanner() {
                   
                   <Card>
                     <CardContent className="p-4 md:p-6 text-center">
-                      <DollarSign className="h-6 w-6 md:h-8 md:w-8 text-green-500 mx-auto mb-2 md:mb-3" />
+                      <IndianRupee className="h-6 w-6 md:h-8 md:w-8 text-green-500 mx-auto mb-2 md:mb-3" />
                       <div className="text-xl md:text-3xl font-bold text-gray-900">{getCurrencySymbol(tripData?.currency)}{totalCost.toFixed(2)}</div>
                       <div className="text-sm md:text-base text-gray-600">Total Cost</div>
                     </CardContent>
@@ -1135,7 +1136,7 @@ function Home() {
     title: '',
     date_start: '',
     date_end: '',
-    currency: 'USD',
+    currency: 'INR',
     theme: 'blue'
   });
 
