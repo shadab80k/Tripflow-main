@@ -305,7 +305,7 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
     location_text: '',
     category: 'general',
     notes: '',
-    cost: '',
+    cost: 0,
     priority: 'medium',
     color: '#3b82f6'
   });
@@ -319,7 +319,7 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
         location_text: activity.location_text || '',
         category: activity.category || 'general',
         notes: activity.notes || '',
-        cost: activity.cost || '',
+        cost: activity.cost || 0,
         priority: activity.priority || 'medium',
         color: activity.color || '#3b82f6'
       });
@@ -331,7 +331,7 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
         location_text: '',
         category: 'general',
         notes: '',
-        cost: '',
+        cost: 0,
         priority: 'medium',
         color: '#3b82f6'
       });
@@ -424,9 +424,9 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
                   type="number"
                   min="0"
                   step="0.01"
-                  value={formData.cost}
-                  onChange={(e) => setFormData({...formData, cost: e.target.value === '' ? '' : parseFloat(e.target.value) || ''})}
-                  placeholder="Enter cost amount"
+                  value={formData.cost === 0 ? '' : formData.cost}
+                  onChange={(e) => setFormData({...formData, cost: e.target.value === '' ? 0 : parseFloat(e.target.value) || 0})}
+                  placeholder="0"
                   className="mt-1.5 md:mt-2 h-10 md:h-12 text-sm"
                 />
               </div>
