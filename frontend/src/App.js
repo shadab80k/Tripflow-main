@@ -38,7 +38,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './components/ui/sheet';
 import { Alert, AlertDescription } from './components/ui/alert';
 import { Progress } from './components/ui/progress';
-import { TimePicker } from './components/ui/time-picker';
 import { useToast, toast } from './hooks/use-toast';
 import { Toaster } from './components/ui/toaster';
 
@@ -370,18 +369,22 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
             <div className="grid grid-cols-2 gap-3 md:gap-4">
               <div>
                 <Label htmlFor="start_time" className="text-sm md:text-base font-semibold">Start Time</Label>
-                <TimePicker
+                <Input
+                  id="start_time"
+                  type="time"
                   value={formData.start_time}
-                  onChange={(value) => setFormData({...formData, start_time: value})}
-                  className="mt-1.5 md:mt-2"
+                  onChange={(e) => setFormData({...formData, start_time: e.target.value})}
+                  className="mt-1.5 md:mt-2 h-10 md:h-12 text-sm"
                 />
               </div>
               <div>
                 <Label htmlFor="end_time" className="text-sm md:text-base font-semibold">End Time</Label>
-                <TimePicker
+                <Input
+                  id="end_time"
+                  type="time"
                   value={formData.end_time}
-                  onChange={(value) => setFormData({...formData, end_time: value})}
-                  className="mt-1.5 md:mt-2"
+                  onChange={(e) => setFormData({...formData, end_time: e.target.value})}
+                  className="mt-1.5 md:mt-2 h-10 md:h-12 text-sm"
                 />
               </div>
             </div>
