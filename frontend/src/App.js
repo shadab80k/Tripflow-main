@@ -47,7 +47,7 @@ import {
   Map, Download, Filter, Search, Share2, Copy, AlertTriangle,
   Plane, Car, Camera, Utensils, Bed, Star, ChevronDown,
   BarChart3, PieChart, TrendingUp, Users, Globe2,
-  Sparkles, Sun, Moon, Settings, Menu, X, Play
+  Sparkles, Sun, Moon, Settings, Menu, X, Play, Construction
 } from 'lucide-react';
 import './App.css';
 
@@ -1053,13 +1053,44 @@ function TripPlanner() {
             </TabsContent>
 
             <TabsContent value="map" className="p-4 md:p-6">
-              <div className="max-w-5xl mx-auto">
-                <div className="mb-4 md:mb-6">
-                  <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Trip Route</h2>
-                  <p className="text-sm md:text-base text-gray-600">Visualize your trip activities on the map</p>
-                </div>
-                <div className="trip-map">
-                  <TripMap activities={activities} />
+              <div className="max-w-4xl mx-auto">
+                <div className="flex flex-col items-center justify-center py-16 md:py-24 text-center">
+                  <div className="p-6 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-full mb-8">
+                    <Construction className="h-16 w-16 md:h-20 md:w-20 text-blue-500" />
+                  </div>
+                  
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Interactive Map
+                  </h2>
+                  
+                  <div className="inline-block px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full mb-6">
+                    Coming Soon
+                  </div>
+                  
+                  <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl leading-relaxed">
+                    We're working hard to bring you an amazing interactive map experience. 
+                    Soon you'll be able to visualize your trip routes, explore destinations, and get detailed location insights.
+                  </p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 w-full max-w-3xl">
+                    <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                      <MapPin className="h-8 w-8 text-blue-500 mb-4 mx-auto" />
+                      <h3 className="font-semibold text-gray-900 mb-2">Route Planning</h3>
+                      <p className="text-sm text-gray-600">Optimize your daily travel routes</p>
+                    </div>
+                    
+                    <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                      <Globe2 className="h-8 w-8 text-green-500 mb-4 mx-auto" />
+                      <h3 className="font-semibold text-gray-900 mb-2">Location Insights</h3>
+                      <p className="text-sm text-gray-600">Discover nearby attractions</p>
+                    </div>
+                    
+                    <div className="p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                      <Car className="h-8 w-8 text-purple-500 mb-4 mx-auto" />
+                      <h3 className="font-semibold text-gray-900 mb-2">Travel Times</h3>
+                      <p className="text-sm text-gray-600">Estimate distances and durations</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </TabsContent>
