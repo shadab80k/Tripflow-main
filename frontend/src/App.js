@@ -298,6 +298,7 @@ function DayColumn({ day, activities, onAddActivity, onEditActivity, onDeleteAct
 
 // Enhanced Activity Form Dialog
 function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
+  const [isSaving, setIsSaving] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     start_time: '09:00',
@@ -336,11 +337,21 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
         color: '#3b82f6'
       });
     }
+    setIsSaving(false); // Reset saving state when dialog opens
   }, [activity, open]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
+    if (isSaving) return; // Prevent duplicate submissions
+    
+    setIsSaving(true);
+    try {
+      await onSave(formData);
+    } catch (error) {
+      console.error('Error in handleSubmit:', error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -446,11 +457,11 @@ function ActivityDialog({ open, onOpenChange, activity, dayId, onSave }) {
           </div>
 
           <div className="flex flex-col sm:flex-row sm:justify-end gap-2 md:gap-3 pt-4 md:pt-6 border-t">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="px-4 md:px-6 py-2 text-sm md:text-base order-2 sm:order-1">
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isSaving} className="px-4 md:px-6 py-2 text-sm md:text-base order-2 sm:order-1">
               Cancel
             </Button>
-            <Button type="submit" className="px-4 md:px-6 py-2 text-sm md:text-base order-1 sm:order-2">
-              {activity ? 'Update Activity' : 'Add Activity'}
+            <Button type="submit" disabled={isSaving} className="px-4 md:px-6 py-2 text-sm md:text-base order-1 sm:order-2 disabled:opacity-50 disabled:cursor-not-allowed">
+              {isSaving ? 'Saving...' : (activity ? 'Update Activity' : 'Add Activity')}
             </Button>
           </div>
         </form>
@@ -1190,6 +1201,7 @@ function Home() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [tripToDelete, setTripToDelete] = useState(null);
+  const [isCreating, setIsCreating] = useState(false);
   const [newTrip, setNewTrip] = useState({
     title: '',
     date_start: '',
@@ -1215,6 +1227,9 @@ function Home() {
 
   const createTrip = async (e) => {
     e.preventDefault();
+    if (isCreating) return; // Prevent duplicate submissions
+    
+    setIsCreating(true);
     try {
       const response = await axios.post(`${API}/trips`, newTrip);
       const tripId = response.data.id;
@@ -1235,6 +1250,13 @@ function Home() {
       }
       
       setCreateDialogOpen(false);
+      setNewTrip({
+        title: '',
+        date_start: '',
+        date_end: '',
+        currency: 'INR',
+        theme: 'blue'
+      });
       toast({
         title: "Success!",
         description: "Trip created successfully",
@@ -1247,6 +1269,8 @@ function Home() {
         description: "Failed to create trip",
         variant: "destructive",
       });
+    } finally {
+      setIsCreating(false);
     }
   };
 
@@ -1552,9 +1576,10 @@ function Home() {
               </Button>
               <Button 
                 type="submit"
-                className="px-6 md:px-8 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 order-1 sm:order-2"
+                disabled={isCreating}
+                className="px-6 md:px-8 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 order-1 sm:order-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Create Trip
+                {isCreating ? 'Creating...' : 'Create Trip'}
               </Button>
             </div>
           </form>
