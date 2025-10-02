@@ -1187,8 +1187,6 @@ function TripPlanner() {
         dayId={selectedDayId}
         onSave={handleSaveActivity}
       />
-      
-      <Toaster />
     </div>
   );
 }
@@ -1625,8 +1623,6 @@ function Home() {
           </div>
         </DialogContent>
       </Dialog>
-      
-      <Toaster />
     </div>
   );
 }
