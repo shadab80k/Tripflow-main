@@ -275,7 +275,7 @@ Tripflow-main/
 
 | Environment | Frontend | Backend |
 |------------|----------|----------|
-| **Production** | [Vercel App](https://your-vercel-url.vercel.app) | [Render API](https://tripflow-backend.onrender.com/api/) |
+| **Production** | [Vercel App](https://tripflow-main.vercel.app/) | [Render API](https://tripflow-backend.onrender.com/api/) |
 | **Development** | `http://localhost:3000` | `http://localhost:8000` |
 
 ## 👥 Contributing
