@@ -1,6 +1,6 @@
 # 🌍 Tripflow - AI-Powered Trip Planning Platform
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-success?style=for-the-badge)](https://your-vercel-url.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-success?style=for-the-badge)](https://tripflow-main.vercel.app/)
 [![Backend API](https://img.shields.io/badge/API-Live%20Backend-blue?style=for-the-badge)](https://tripflow-backend.onrender.com/api/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/shadab80k/Tripflow-main?style=for-the-badge)](https://github.com/shadab80k/Tripflow-main/stargazers)
